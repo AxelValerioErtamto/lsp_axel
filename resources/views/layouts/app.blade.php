@@ -14,6 +14,7 @@
                 <div class="flex items-center gap-4 text-sm">
                     @if (auth()->user()->isAdmin())
                         <a href="{{ route('admin.garages.index') }}" class="hover:underline">Garasi</a>
+                        <a href="{{ route('admin.tenants.index') }}" class="hover:underline">Verifikasi</a>
                     @endif
                     <span class="text-gray-500">{{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
