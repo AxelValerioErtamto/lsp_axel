@@ -15,6 +15,8 @@
                     @if (auth()->user()->isAdmin())
                         <a href="{{ route('admin.garages.index') }}" class="hover:underline">Garasi</a>
                         <a href="{{ route('admin.tenants.index') }}" class="hover:underline">Verifikasi</a>
+                    @else
+                        <a href="{{ route('rentals.create') }}" class="hover:underline">Sewa Garasi</a>
                     @endif
                     <span class="text-gray-500">{{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">

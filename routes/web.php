@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\GarageController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -23,4 +24,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/tenants', [TenantController::class, 'index'])->name('tenants.index');
     Route::patch('/tenants/{user}/approve', [TenantController::class, 'approve'])->name('tenants.approve');
     Route::patch('/tenants/{user}/reject', [TenantController::class, 'reject'])->name('tenants.reject');
+});
+
+Route::middleware(['auth', 'role:tenant'])->group(function () {
+    Route::get('/rentals/create', [RentalController::class, 'create'])->name('rentals.create');
+    Route::post('/rentals', [RentalController::class, 'store'])->name('rentals.store');
+    Route::get('/rentals/{rental}', [RentalController::class, 'show'])->name('rentals.show');
 });
