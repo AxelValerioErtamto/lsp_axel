@@ -17,9 +17,7 @@ use Illuminate\View\View;
 
 class RentalController extends Controller
 {
-    public function __construct(private RentalCalculator $calculator)
-    {
-    }
+    public function __construct(private RentalCalculator $calculator) {}
 
     // Step 1: the form. Step 2 (after "Cari Garasi"): the available garages with their totals.
     public function create(Request $request): View

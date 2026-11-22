@@ -29,6 +29,6 @@ enum GarageType: string
     // Example: GarageType::Car->code(10) returns "C010"
     public function code(int $number): string
     {
-        return $this->prefix() . str_pad((string) $number, 3, '0', STR_PAD_LEFT);
+        return $this->prefix().str_pad((string) $number, 3, '0', STR_PAD_LEFT);
     }
 }

@@ -51,7 +51,7 @@ class StoreRentalRequest extends FormRequest
                 'nullable',
                 'integer',
                 'min:1',
-                'max:' . app(RentalCalculator::class)->maxDailyDays(today()),
+                'max:'.app(RentalCalculator::class)->maxDailyDays(today()),
             ],
             'garage_type' => ['required', Rule::in($allowedGarageTypes)],
         ];

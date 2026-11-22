@@ -14,9 +14,7 @@ use Illuminate\View\View;
 
 class RentalExtensionController extends Controller
 {
-    public function __construct(private RentalCalculator $calculator)
-    {
-    }
+    public function __construct(private RentalCalculator $calculator) {}
 
     // Garages that are being rented today.
     public function index(): View

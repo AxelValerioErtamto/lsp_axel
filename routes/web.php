@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\GarageController;
-use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\RentalExtensionController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
