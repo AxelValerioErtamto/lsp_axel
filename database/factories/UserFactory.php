@@ -23,4 +23,19 @@ class UserFactory extends Factory
             'status' => UserStatus::Approved,
         ];
     }
+
+    public function admin(): static
+    {
+        return $this->state(['role' => Role::Admin, 'nik' => null]);
+    }
+
+    public function pending(): static
+    {
+        return $this->state(['status' => UserStatus::Pending]);
+    }
+
+    public function rejected(): static
+    {
+        return $this->state(['status' => UserStatus::Rejected]);
+    }
 }
