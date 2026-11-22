@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\GarageController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\RentalExtensionController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/rentals', [RentalExtensionController::class, 'index'])->name('rentals.index');
     Route::get('/rentals/{rental}/extend', [RentalExtensionController::class, 'edit'])->name('rentals.edit');
     Route::patch('/rentals/{rental}', [RentalExtensionController::class, 'update'])->name('rentals.update');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 });
 
 Route::middleware(['auth', 'role:tenant'])->group(function () {
