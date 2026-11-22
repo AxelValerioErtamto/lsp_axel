@@ -18,7 +18,7 @@ class RentalCalculatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->calculator = new RentalCalculator();
+        $this->calculator = new RentalCalculator;
     }
 
     // ---------- Exclusive end date ----------

@@ -24,7 +24,7 @@ class ExtendRentalRequest extends FormRequest
     public static function endDateRules(Rental $rental): array
     {
         return [
-            'end_date' => ['required', 'date', 'after:' . $rental->end_date->toDateString()],
+            'end_date' => ['required', 'date', 'after:'.$rental->end_date->toDateString()],
         ];
     }
 }

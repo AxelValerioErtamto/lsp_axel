@@ -1,58 +1,58 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aplikasi Penyewaan Garasi Kendaraan
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi web untuk uji kompetensi Pemrogram (LSP). Penyewa dapat menyewa garasi sepeda, mobil, atau mobil listrik secara harian maupun bulanan, dan Admin mengelola garasi, verifikasi penyewa, perpanjangan sewa, serta laporan.
 
-## About Laravel
+## Fitur
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+| Role | Fitur |
+| --- | --- |
+| Tamu | Mendaftar sebagai penyewa (NIK, nama, telepon, email, password) |
+| Admin, Penyewa | Login / logout (penyewa harus disetujui Admin terlebih dahulu) |
+| Penyewa | Sewa garasi baru: isi kendaraan dan tipe sewa, pilih garasi tersedia beserta total biayanya, unggah bukti pelunasan |
+| Admin | Buat garasi secara berkelompok dengan kode otomatis (S001, C010, E005) dan lihat daftar garasi beserta statusnya |
+| Admin | Verifikasi pendaftar baru (terima / tolak) |
+| Admin | Perpanjang sewa: pilih garasi yang sedang disewa, ubah tanggal selesai, lihat sisa biaya, unggah bukti bayar |
+| Admin | Laporan sewa per bulan, per hari, per tipe garasi, dan per penyewa |
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Aturan tanggal dan biaya
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Periode sewa adalah `[tanggal mulai, tanggal selesai)`: garasi kembali tersedia **pada** tanggal selesai.
+- Tanggal mulai selalu hari ini.
+- Sewa harian: tanggal selesai = tanggal mulai + jumlah hari. Maksimal jumlah hari = jumlah hari dalam bulan mulai − 1.
+- Sewa bulanan: tanggal selesai = tanggal mulai + jumlah hari dalam bulan mulai (contoh: 31 Jan 2026 → 3 Mar 2026). Harga = 25 × harga harian.
+- Mobil listrik di garasi mobil listrik diisi listrik hingga penuh: biaya = kapasitas baterai (kWh) × harga per kWh.
+- Perpanjangan: sisa biaya = selisih hari (tanggal selesai baru − tanggal selesai lama) × harga harian.
 
-## Learning Laravel
+Seluruh perhitungan ada di `app/Services/RentalCalculator.php` dan diuji di `tests/Unit/RentalCalculatorTest.php`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Teknologi
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Laravel 13 (PHP 8.3+), SQLite, Blade, Tailwind CSS (Vite), PHPUnit.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Cara menjalankan
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/AxelValerioErtamto/lsp_axel.git
+cd lsp_axel
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+npm run build
+php artisan serve
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Buka http://127.0.0.1:8000. Jika diminta membuat file database SQLite saat migrate, pilih **yes**.
 
-## Contributing
+**Akun Admin:** `admin@garasi.test` / `password`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Menjalankan pengujian
 
-## Code of Conduct
+```bash
+php artisan test
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- `tests/Unit`: unit test (white-box) untuk `RentalCalculator` dan enum.
+- `tests/Feature`: feature test (black-box) untuk setiap fitur, termasuk boundary value analysis.
