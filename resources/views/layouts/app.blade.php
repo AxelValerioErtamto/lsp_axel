@@ -12,7 +12,10 @@
             <a href="{{ route('home') }}" class="font-semibold">Sewa Garasi</a>
             @auth
                 <div class="flex items-center gap-4 text-sm">
-                    <span>{{ auth()->user()->name }}</span>
+                    @if (auth()->user()->isAdmin())
+                        <a href="{{ route('admin.garages.index') }}" class="hover:underline">Garasi</a>
+                    @endif
+                    <span class="text-gray-500">{{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="text-red-600 hover:underline">Logout</button>
