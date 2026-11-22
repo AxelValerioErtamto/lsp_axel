@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\GarageController;
+use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/garages', [GarageController::class, 'index'])->name('garages.index');
     Route::post('/garages', [GarageController::class, 'store'])->name('garages.store');
+    Route::get('/tenants', [TenantController::class, 'index'])->name('tenants.index');
+    Route::patch('/tenants/{user}/approve', [TenantController::class, 'approve'])->name('tenants.approve');
+    Route::patch('/tenants/{user}/reject', [TenantController::class, 'reject'])->name('tenants.reject');
 });
