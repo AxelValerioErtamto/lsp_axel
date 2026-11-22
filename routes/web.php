@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\GarageController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,4 +14,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::view('/', 'home')->name('home');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/garages', [GarageController::class, 'index'])->name('garages.index');
+    Route::post('/garages', [GarageController::class, 'store'])->name('garages.store');
 });
